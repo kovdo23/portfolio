@@ -236,6 +236,30 @@ hr.major {
 	text-transform: uppercase;
 }
 
+/* Speciális badge árnyalatok */
+.tag.mysql {
+    color: #54ebff;
+    border-color: rgba(69, 233, 255, 0.3);
+    background: rgba(110, 245, 255, 0.096);
+}
+.tag.powerbi {
+	color: #54ebff;
+    border-color: rgba(69, 233, 255, 0.3);
+    background: rgba(110, 245, 255, 0.096);
+}
+.tag.excel {
+	color: #54ebff;
+    border-color: rgba(69, 233, 255, 0.3);
+    background: rgba(110, 245, 255, 0.096);
+}
+.tag.cpp {
+	color: #54ebff;
+    border-color: rgba(69, 233, 255, 0.3);
+    background: rgba(110, 245, 255, 0.096);
+}
+
+
+
 /* Button */
 
 input[type="submit"],
@@ -341,6 +365,7 @@ a.image:hover img {
 	margin: 1.5rem 0 2rem 0;
 	width: 100%;
 }
+
 
 .image.main {
 	display: block;
@@ -588,6 +613,25 @@ body.is-preload #wrapper.fade-in:before {
 }
 
 /* Featured Post (Kiemelt kártya) */
+
+#main > .post.featured,
+#main > .posts > article {
+    position: relative;
+    overflow: hidden;
+}
+
+#main > .post.featured::before,
+#main > .posts > article::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+}
+
+
 
 #main > .post.featured {
 	background: rgba(30, 41, 59, 0.7);
