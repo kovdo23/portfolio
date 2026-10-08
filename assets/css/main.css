@@ -31,9 +31,23 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-	line-height: 1;
-	-webkit-text-size-adjust: none;
-	background-color: #0b0f19;
+    color: #94a3b8;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+    
+    /* Új, rögzített animált háttér */
+    background: linear-gradient(-45deg, #0b0f19, #0f172a, #12265c, #060911);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    background-attachment: fixed; /* Ez tartja a helyén görgetéskor! */
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 ol, ul {
@@ -234,6 +248,14 @@ hr.major {
 	border: 1px solid rgba(56, 189, 248, 0.25);
 	letter-spacing: 0.02em;
 	text-transform: uppercase;
+	transition: all 0.3s ease;
+    cursor: default; /* Vagy 'pointer', ha később linkelni akarod őket */
+}
+
+.tag:hover {
+    transform: translateY(-2px);
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
 }
 
 /* Speciális badge árnyalatok */
@@ -258,6 +280,17 @@ hr.major {
     background: rgba(110, 245, 255, 0.096);
 }
 
+.tag.python{
+	color: #54ebff;
+    border-color: rgba(69, 233, 255, 0.3);
+    background: rgba(110, 245, 255, 0.096);
+}
+
+
+.tag.mysql:hover, .tag.powerbi:hover, .tag.excel:hover, .tag.cpp:hover, .tag.python:hover {
+    box-shadow: 0 4px 12px rgba(110, 245, 255, 0.4);
+    border-color: rgba(110, 245, 255, 0.6);
+}
 
 
 /* Button */
@@ -382,18 +415,7 @@ a.image:hover img {
 	overflow: hidden;
 }
 
-#wrapper > .bg {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background-color: #0b0f19;
-	background-image: 
-		radial-gradient(circle at 50% 10%, rgba(30, 58, 138, 0.3), transparent 65%),
-		linear-gradient(180deg, #0b0f19 0%, #060911 100%);
-	z-index: -1;
-}
+
 
 #wrapper > .bg.fixed {
 	position: fixed;
@@ -1015,4 +1037,557 @@ ul.actions.special {
 
 body.is-navPanel-visible #navPanel {
 	transform: translateX(0);
+}
+
+
+
+/* ==========================================================================
+   CAROUSEL ÉS EREDETI KÁRTYA STÍLUS VISSZAÁLLÍTÁSA
+   ========================================================================== */
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+    padding: 1.5rem 0; /* Hely a kártyák árnyékának */
+}
+
+.carousel-track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 2.5rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%;
+}
+
+/* --- AZ EREDETI KÁRTYA KINÉZET VISSZAÁLLÍTÁSA --- */
+.carousel-track > article {
+    /* Méretezés: pontosan 2 kártya látszik egyszerre */
+    flex: 0 0 calc(50% - 1.25rem) !important;
+    width: calc(50% - 1.25rem) !important;
+    box-sizing: border-box;
+
+    /* Eredeti Glassmorphism kártya stílus */
+    background: rgba(30, 41, 59, 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 14px !important;
+    padding: 2.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* Felső finom kék fénycsík a kártya élén */
+.carousel-track > article::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+}
+
+/* Kártya lebegése hover esetén */
+.carousel-track > article:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+/* Cím és szöveg formázása a kártyán belül */
+.carousel-track > article header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+}
+
+.carousel-track > article p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Képek és alsó gombok igazítása */
+.carousel-track > article .image {
+    margin: 1.5rem 0 2rem 0;
+}
+
+.carousel-track > article ul.actions {
+    margin-top: auto;
+}
+
+/* --- LAPOZÓ GOMBOK --- */
+.carousel-btn {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8 !important;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    padding: 0;
+}
+
+.carousel-btn:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn { left: -1.75rem; }
+.next-btn { right: -1.75rem; }
+
+/* Mobil nézet: 1 kártya látszik egyszerre */
+@media screen and (max-width: 980px) {
+    .carousel-track > article {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+    }
+    .prev-btn { left: -0.5rem; }
+    .next-btn { right: -0.5rem; }
+}
+
+
+
+
+/* --- Carousel Szekció Címek --- */
+.carousel-section-title {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 4rem 0 1.5rem 0; /* Távolság az előző carouseltől és a következőtől */
+    padding-left: 1.25rem;
+    border-left: 4px solid #38bdf8; /* Elegáns neonkék vonal a bal szélen */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+}
+
+/* Az első címnek ne legyen akkora felső margója, hogy ne csússzon le túlságosan */
+#main > .carousel-section-title:first-of-type {
+    margin-top: 0.5rem;
+}
+
+/* Kisebb képernyőn (mobil) picit kisebb betűméret */
+@media screen and (max-width: 736px) {
+    .carousel-section-title {
+        font-size: 1.4rem;
+        margin: 3rem 0 1rem 0;
+        padding-left: 1rem;
+    }
+}
+
+
+/* --- Kategória Konténer Kártyák --- */
+.category-block {
+    background: rgba(15, 23, 42, 0.4); /* Kicsit sötétebb, finom üveghatás */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 4rem; /* Távolság a következő kategóriától */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Az utolsó kategória alatt ne legyen felesleges üres hely */
+.category-block:last-child {
+    margin-bottom: 0;
+}
+
+/* A címek margójának felülírása, hogy a kártyán belül jól mutassanak */
+.category-block .carousel-section-title {
+    margin-top: 0 !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Mobil nézeten kisebb belső térköz (padding), hogy kiférjenek a dolgok */
+@media screen and (max-width: 980px) {
+    .category-block {
+        padding: 1.5rem;
+        margin-bottom: 2.5rem;
+        border-radius: 12px;
+    }
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+   MODERN "SHIFT" TÉMA (Bento Box & Aszimmetrikus Layout)
+   ========================================================================== */
+
+body.modern-theme {
+    background-color: #050505; /* Még sötétebb, elegánsabb háttér */
+}
+
+.minimal-header {
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* Kicsi szürke "gomb" formájú címkék (badge) */
+.badge, .section-label {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: #a1a1aa;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+}
+
+/* --- 1. HERO SZEKCIÓ --- */
+.shift-hero {
+    position: relative;
+    padding: 8rem 2rem 10rem 2rem;
+    text-align: center;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shift-hero h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+}
+
+.shift-hero p {
+    font-size: 1.25rem;
+    color: #a1a1aa;
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+    text-align: center;
+}
+
+.button.white-btn {
+    background-color: #ffffff;
+    color: #000000 !important;
+    border: none;
+    border-radius: 30px;
+    padding: 0 2rem;
+    font-weight: 700;
+}
+.button.white-btn:hover {
+    background-color: #e4e4e7;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* --- 2. ABOUT SZEKCIÓ --- */
+.shift-about {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-header {
+    margin-bottom: 4rem;
+}
+
+.about-header h2 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    max-width: 800px;
+    line-height: 1.2;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 24px;
+    object-fit: cover;
+    aspect-ratio: 4/5;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.about-info p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #a1a1aa;
+    margin-bottom: 1.5rem;
+}
+
+.text-link {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 2px;
+}
+
+.stats-container {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+}
+
+.stat-item strong {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    min-width: 80px;
+}
+
+.stat-item span {
+    color: #a1a1aa;
+    font-size: 0.95rem;
+}
+
+/* --- 3. BENTO PROJECTS GRID --- */
+.shift-projects {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.projects-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    gap: 2rem;
+}
+
+.projects-header-row h2 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.projects-header-row p {
+    max-width: 400px;
+    margin: 0;
+    color: #a1a1aa;
+    text-align: right;
+}
+
+/* Itt történik a varázslat: a Bento rács */
+.bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    height: 700px; /* Fix magasság, amit kitöltenek a kártyák */
+}
+
+.bento-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bento-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem;
+    text-decoration: none;
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.bento-card:hover {
+    transform: scale(0.98);
+}
+
+.large-card {
+    height: 100%;
+}
+
+.small-card {
+    flex: 1; /* A két kis kártya egyenlően osztja el az oszlop magasságát */
+}
+
+/* Kép beállítása a kártya hátterének */
+.bento-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.bento-card:hover .bento-bg {
+    transform: scale(1.05);
+}
+
+/* Sötét átmenet (gradiens), hogy a szöveg olvasható legyen a képen */
+.bento-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    z-index: 2;
+}
+
+.bento-content {
+    position: relative;
+    z-index: 3;
+}
+
+.bento-content h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.bento-content p {
+    color: #a1a1aa;
+    margin: 0;
+    text-align: left;
+}
+
+.arrow-icon {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: #ffffff;
+    font-size: 1.5rem;
+    z-index: 3;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.bento-card:hover .arrow-icon {
+    opacity: 1;
+}
+
+/* Reszponzivitás telefonra */
+@media screen and (max-width: 980px) {
+    .shift-hero h1 { font-size: 3rem; }
+    
+    .about-grid, .bento-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .projects-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .projects-header-row p {
+        text-align: left;
+    }
+    
+    .large-card, .small-card {
+        min-height: 350px;
+    }
+}
+
+
+/* --- SZÉLESEBB KÉPERNYŐ (Új beállítások) --- */
+
+/* Megnöveljük a fő konténerek maximális szélességét */
+#nav,
+#main,
+#footer {
+    max-width: 74rem !important; /* Eredetileg 74rem volt. Ha még szélesebbet akarsz, írd át 100rem-re! */
+}
+
+/* A Bento Box szekció is engedjük, hogy kitöltse az új, nagyobb helyet */
+.shift-projects {
+    max-width: 100% !important; /* Az eredeti 1200px-es korlát felülírása */
+    padding: 2rem 0 !important; /* Eltüntetjük a felesleges oldalsó margót, mert a #main már ad neki teret */
+}
+
+/* Kisebb képernyőn (mobil/tablet) picit csökkentjük a Bento rács magasságát, hogy ne legyen túl nyújtott */
+@media screen and (max-width: 980px) {
+    .bento-grid {
+        height: auto !important;
+    }
+}
+
+
+/* Bento kártya tartalmának és gombjainak garantált balra igazítása */
+.bento-card .bento-content {
+    text-align: left !important;
+}
+
+.bento-card .bento-content h2,
+.bento-card .bento-content h3 {
+    text-align: left !important;
+}
+
+.bento-card .bento-content ul.actions {
+    justify-content: flex-start !important; /* Ez tolja balra a gombokat */
+    margin-top: 1.5rem !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+
+/* Mobil nézeten a gombok kitöltik a teret */
+@media screen and (max-width: 480px) {
+    .bento-card .bento-content ul.actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .bento-card .bento-content ul.actions li,
+    .bento-card .bento-content ul.actions li .button {
+        width: 100%;
+    }
 }
